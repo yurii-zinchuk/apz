@@ -1,0 +1,27 @@
+POST http://127.0.0.1:8080/
+Content-Type: Application/JSON
+
+{
+    "message": "Hello, this is a simple text message."
+}
+###
+
+POST http://127.0.0.1:8080/
+Content-Type: Application/JSON
+
+{
+  "message": "Hello again, this is another text message."
+}
+###
+
+POST http://127.0.0.1:8080/
+Content-Type: Application/JSON
+
+{
+  "message": "Goodbye, this is a last text message."
+}
+###
+
+GET http://127.0.0.1:8080/
+
+###
