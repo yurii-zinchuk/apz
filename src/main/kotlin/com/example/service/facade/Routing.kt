@@ -1,7 +1,7 @@
 package com.example.service.facade
 
-import com.example.domain.Service
 import com.example.data.LoggingServiceConfigManager
+import com.example.domain.Service
 import com.example.domain.models.Log
 import com.example.domain.models.Message
 import io.ktor.client.*
@@ -27,7 +27,7 @@ private fun Routing.handlePostRequest(loggingClient: HttpClient) = post("/") {
     val uuid = java.util.UUID.randomUUID().toString()
 
     loggingClient.post {
-        url.port = getRandomLoggingPort()
+        url.port = getRandomLoggingServicePort()
         setBody(Log(uuid, message.message))
     }
 
@@ -37,7 +37,7 @@ private fun Routing.handlePostRequest(loggingClient: HttpClient) = post("/") {
 private fun Routing.handleGetRequest(loggingClient: HttpClient, messagingClient: HttpClient) = get("/") {
     val logs: Deferred<String> = async {
         loggingClient.get {
-            url.port = getRandomLoggingPort()
+            url.port = getRandomLoggingServicePort()
         }.body()
     }
     val messagingResponse: Deferred<String> = async { messagingClient.get {}.body() }
@@ -45,7 +45,7 @@ private fun Routing.handleGetRequest(loggingClient: HttpClient, messagingClient:
     call.respondText("${logs.await()} ${messagingResponse.await()}")
 }
 
-private fun getRandomLoggingPort(): Int {
+private fun getRandomLoggingServicePort(): Int {
     val instances = LoggingServiceConfigManager.getLoggingServiceInstancesNumber()
     return Service.LOGGING.port + (0..<instances).random()
 }
