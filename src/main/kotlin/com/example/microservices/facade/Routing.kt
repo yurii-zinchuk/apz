@@ -1,5 +1,7 @@
 package com.example.microservices.facade
 
+import com.example.common.Service
+import com.example.common.io.LoggingServiceConfigManager
 import com.example.common.models.Log
 import com.example.common.models.Message
 import io.ktor.client.*
@@ -25,6 +27,7 @@ private fun Routing.handlePostRequest(loggingClient: HttpClient) = post("/") {
     val uuid = java.util.UUID.randomUUID().toString()
 
     loggingClient.post {
+        url.port = getRandomLoggingPort()
         setBody(Log(uuid, message.message))
     }
 
@@ -32,8 +35,17 @@ private fun Routing.handlePostRequest(loggingClient: HttpClient) = post("/") {
 }
 
 private fun Routing.handleGetRequest(loggingClient: HttpClient, messagingClient: HttpClient) = get("/") {
-    val logs: Deferred<String> = async { loggingClient.get {}.body() }
+    val logs: Deferred<String> = async {
+        loggingClient.get {
+            url.port = getRandomLoggingPort()
+        }.body()
+    }
     val messagingResponse: Deferred<String> = async { messagingClient.get {}.body() }
 
     call.respondText("${logs.await()} ${messagingResponse.await()}")
+}
+
+private fun getRandomLoggingPort(): Int {
+    val instances = LoggingServiceConfigManager.getLoggingServiceInstancesNumber()
+    return Service.LOGGING.port + (0..<instances).random()
 }

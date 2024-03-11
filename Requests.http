@@ -1,27 +1,81 @@
-POST http://127.0.0.1:8080/
+POST http://127.0.0.1:8081/
 Content-Type: Application/JSON
 
 {
-    "message": "Hello, this is a simple text message."
+    "message": "Hello, this is msg1."
 }
 ###
 
-POST http://127.0.0.1:8080/
+POST http://127.0.0.1:8081/
 Content-Type: Application/JSON
 
 {
-  "message": "Hello again, this is another text message."
+  "message": "Hello, this is msg2."
 }
 ###
 
-POST http://127.0.0.1:8080/
+POST http://127.0.0.1:8081/
 Content-Type: Application/JSON
 
 {
-  "message": "Goodbye, this is a last text message."
+  "message": "Hello, this is msg3."
 }
 ###
 
-GET http://127.0.0.1:8080/
+POST http://127.0.0.1:8081/
+Content-Type: Application/JSON
 
+{
+  "message": "Hello, this is msg4."
+}
 ###
+
+POST http://127.0.0.1:8081/
+Content-Type: Application/JSON
+
+{
+  "message": "Hello, this is msg5."
+}
+###
+
+POST http://127.0.0.1:8081/
+Content-Type: Application/JSON
+
+{
+  "message": "Hello, this is msg6."
+}
+###
+
+POST http://127.0.0.1:8081/
+Content-Type: Application/JSON
+
+{
+  "message": "Hello, this is msg7."
+}
+###
+
+POST http://127.0.0.1:8081/
+Content-Type: Application/JSON
+
+{
+  "message": "Hello, this is msg8."
+}
+###
+
+POST http://127.0.0.1:8081/
+Content-Type: Application/JSON
+
+{
+  "message": "Hello, this is msg9."
+}
+###
+
+POST http://127.0.0.1:8081/
+Content-Type: Application/JSON
+
+{
+  "message": "Hello, this is msg10."
+}
+###
+
+GET http://127.0.0.1:8081/
