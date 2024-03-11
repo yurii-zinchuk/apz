@@ -1,6 +1,6 @@
-package com.example.microservices.facade
+package com.example.service.facade
 
-import com.example.common.Service
+import com.example.domain.Service
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*

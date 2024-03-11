@@ -1,7 +1,7 @@
-package com.example.microservices.logging
+package com.example.service.logging
 
-import com.example.common.io.HazelcastManager
-import com.example.common.models.Log
+import com.example.data.HazelcastManager
+import com.example.domain.models.Log
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*

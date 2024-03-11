@@ -1,4 +1,4 @@
-package com.example.microservices.messaging
+package com.example.service.messaging
 
 import io.ktor.server.application.*
 import io.ktor.server.response.*

@@ -1,6 +1,6 @@
-package com.example.microservices.messaging
+package com.example.service.messaging
 
-import com.example.common.Service
+import com.example.domain.Service
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*

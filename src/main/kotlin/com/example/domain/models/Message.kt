@@ -1,3 +1,3 @@
-package com.example.common.models
+package com.example.domain.models
 
 data class Message(val message: String)

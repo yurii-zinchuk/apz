@@ -1,9 +1,9 @@
-package com.example.microservices.facade
+package com.example.service.facade
 
-import com.example.common.Service
-import com.example.common.io.LoggingServiceConfigManager
-import com.example.common.models.Log
-import com.example.common.models.Message
+import com.example.domain.Service
+import com.example.data.LoggingServiceConfigManager
+import com.example.domain.models.Log
+import com.example.domain.models.Message
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*

@@ -1,19 +1,21 @@
-package com.example.common.io
+package com.example.data
 
 import com.hazelcast.config.FileSystemXmlConfig
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.map.IMap
 
-private const val HAZELCAST_CONFIG_PATH = "src/main/resources/hazelcast.xml"
+private const val CONFIG_PATH = "hazelcast.xml"
 private const val LOGS_MAP_NAME = "logs"
 
-object HazelcastManager {
+object HazelcastManager : DataManager() {
     private lateinit var hazelcastInstance: HazelcastInstance
     private lateinit var logs: IMap<String, String>
 
     fun startHazelcast() {
-        hazelcastInstance = Hazelcast.newHazelcastInstance(FileSystemXmlConfig(HAZELCAST_CONFIG_PATH))
+        hazelcastInstance = Hazelcast.newHazelcastInstance(
+            FileSystemXmlConfig(LOCAL_DATA_ROOT_DIR + CONFIG_PATH)
+        )
         logs = hazelcastInstance.getMap(LOGS_MAP_NAME)
     }
 
