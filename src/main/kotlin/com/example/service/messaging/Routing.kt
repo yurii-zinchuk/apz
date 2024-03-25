@@ -1,5 +1,6 @@
 package com.example.service.messaging
 
+import com.example.data.MessagesStore
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -16,5 +17,5 @@ private fun handlePostRequest() {
 }
 
 private fun Routing.handleGetRequest() = get("/") {
-    call.respondText("Not yet implemented!")
+    call.respondText(MessagesStore.getMessages().toString())
 }

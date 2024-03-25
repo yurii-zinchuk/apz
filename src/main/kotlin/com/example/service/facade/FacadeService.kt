@@ -1,5 +1,6 @@
 package com.example.service.facade
 
+import com.example.data.HazelcastManager
 import com.example.domain.Service
 import io.ktor.client.*
 import io.ktor.client.plugins.*
@@ -26,6 +27,7 @@ private fun Application.moduleFacade() {
     install(io.ktor.server.plugins.contentnegotiation.ContentNegotiation) { gson() }
     configureHttpClients()
     configureFacadeRouting(loggingClient, messagingClient)
+    handleEvents()
 }
 
 private fun configureHttpClients() {
@@ -53,5 +55,18 @@ private fun configureHttpClients() {
             }
             contentType(ContentType.Application.Json)
         }
+    }
+}
+
+private fun Application.handleEvents() {
+    environment.monitor.subscribe(ApplicationStarted) {
+        environment.log.info("Service Started")
+        environment.log.info("Starting new Hazelcast instance...")
+        HazelcastManager.startHazelcast()
+    }
+    environment.monitor.subscribe(ApplicationStopped) {
+        environment.log.info("Service Stopped")
+        environment.log.info("Shutting down Hazelcast instance...")
+        HazelcastManager.stopHazelcast()
     }
 }

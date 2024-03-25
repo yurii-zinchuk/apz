@@ -1,6 +1,8 @@
 package com.example.service.facade
 
+import com.example.data.HazelcastManager
 import com.example.data.LoggingServiceConfigManager
+import com.example.data.MessagingServiceConfigManager
 import com.example.domain.Service
 import com.example.domain.models.Log
 import com.example.domain.models.Message
@@ -31,6 +33,8 @@ private fun Routing.handlePostRequest(loggingClient: HttpClient) = post("/") {
         setBody(Log(uuid, message.message))
     }
 
+    HazelcastManager.pushMessage(message.message)
+
     call.respond(HttpStatusCode.OK)
 }
 
@@ -40,12 +44,21 @@ private fun Routing.handleGetRequest(loggingClient: HttpClient, messagingClient:
             url.port = getRandomLoggingServicePort()
         }.body()
     }
-    val messagingResponse: Deferred<String> = async { messagingClient.get {}.body() }
+    val messages: Deferred<String> = async {
+        messagingClient.get {
+            url.port = getRandomMessagingServicePort()
+        }.body()
+    }
 
-    call.respondText("${logs.await()} ${messagingResponse.await()}")
+    call.respondText("${logs.await()} ${messages.await()}")
 }
 
 private fun getRandomLoggingServicePort(): Int {
     val instances = LoggingServiceConfigManager.getLoggingServiceInstancesNumber()
     return Service.LOGGING.port + (0..<instances).random()
+}
+
+private fun getRandomMessagingServicePort(): Int {
+    val instances = MessagingServiceConfigManager.getMessagingServiceInstancesNumber()
+    return Service.MESSAGING.port - (0..<instances).random()
 }
